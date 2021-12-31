@@ -1,6 +1,8 @@
-const server = require('./src/server');
-const config = require('./src/config');
+import server from './src/server.js';
+import config from './src/config/index.js';
 
 server.listen(config.port, () => {
-  console.log(`Server listening at port: ${config.port}`); // eslint-disable-line no-console
+  console.log(
+    `Server listening in ${process.env.NODE_ENV} mode on port: ${config.port}`
+  ); // eslint-disable-line no-console
 });

@@ -18,7 +18,7 @@ const ProductPage = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [params.id]);
+  }, [params]);
 
   const renderRating = product.rating ? (
     <Rating value={product.rating} text={`${product.numReviews} reviews`} />

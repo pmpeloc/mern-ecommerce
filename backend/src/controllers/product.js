@@ -1,12 +1,10 @@
-const products = require('../data/products');
+import products from '../data/products.js';
 
-module.exports = {
-  async getProducts(req, res) {
-    res.json(products);
-  },
+export function getProducts(req, res) {
+  return res.json(products);
+}
 
-  async getProductById(req, res) {
-    const product = products.find((p) => p._id === req.params.id);
-    res.json(product);
-  },
-};
+export function getProductById(req, res) {
+  const product = products.find((p) => p._id === req.params.id);
+  return res.json(product);
+}

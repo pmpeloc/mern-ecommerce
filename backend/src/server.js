@@ -1,10 +1,8 @@
-const express = require('express');
-const config = require('./config');
-const routes = require('./routes/index');
+import express from 'express';
+import config from './config/index.js';
+import routes from './routes/index.js';
 
 const server = express();
-
-server.name = 'mern-ecommerce';
 
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
@@ -27,4 +25,4 @@ server.use((err, req, res, next) => {
   res.status(status).send(message);
 });
 
-module.exports = server;
+export default server;

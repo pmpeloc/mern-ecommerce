@@ -1,7 +1,9 @@
-const server = require('express').Router();
-const { getProducts, getProductById } = require('../controllers/product');
+import { Router } from 'express';
+import { getProducts, getProductById } from '../controllers/product.js';
+
+const server = Router();
 
 server.get('/', getProducts);
 server.get('/:id', getProductById);
 
-module.exports = server;
+export default server;
