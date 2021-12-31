@@ -4,3 +4,12 @@
 
 - `yarn create react-app frontend`
 - `yarn start`
+- `yarn add react-bootstrap`
+
+## Agregados para React Bootstrap:
+
+- https://bootswatch.com/
+
+## Shorcuts para el front:
+
+- `rafce`
