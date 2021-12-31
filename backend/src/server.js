@@ -6,6 +6,11 @@ const server = express();
 
 server.name = 'mern-ecommerce';
 
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  next();
+});
+
 server.use(config.api.prefix, routes);
 
 // API status

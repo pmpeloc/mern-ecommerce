@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Product from '../components/Product';
-import products from '../products';
+import productService from '../services/productService';
 
 const HomePage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    productService
+      .getProducts()
+      .then((res) => {
+        setProducts(res);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <>
       <h1>Últimos Productos</h1>

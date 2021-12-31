@@ -6,6 +6,7 @@
 - `yarn start`
 - `yarn add react-bootstrap`
 - `yarn add react-router-dom react-router-bootstrap`
+- `yarn add axios`
 
 ## Agregados para React Bootstrap:
 

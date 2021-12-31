@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import Rating from '../components/Rating';
-import products from '../products';
+import productService from '../services/productService';
 
 const ProductPage = () => {
   const params = useParams();
-  const product = products.find((p) => p._id === params.id);
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    productService
+      .getProductById(params.id)
+      .then((res) => {
+        setProduct(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [params.id]);
+
+  const renderRating = product.rating ? (
+    <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+  ) : null;
 
   return (
     <>
@@ -22,12 +38,7 @@ const ProductPage = () => {
             <ListGroup.Item>
               <h3>{product.name}</h3>
             </ListGroup.Item>
-            <ListGroup.Item>
-              <Rating
-                value={product.rating}
-                text={`${product.numReviews} reviews`}
-              />
-            </ListGroup.Item>
+            <ListGroup.Item>{renderRating}</ListGroup.Item>
             <ListGroup.Item>Precio: $ {product.price}</ListGroup.Item>
             <ListGroup.Item>Descripción: {product.description}</ListGroup.Item>
           </ListGroup>
