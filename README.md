@@ -5,6 +5,7 @@
 - `yarn create react-app frontend`
 - `yarn start`
 - `yarn add react-bootstrap`
+- `yarn add react-router-dom react-router-bootstrap`
 
 ## Agregados para React Bootstrap:
 
