@@ -22,3 +22,4 @@
 - `yarn add express`
 - `yarn add dotenv`
 - `yarn add -D nodemon`
+- `yarn add mongoose`

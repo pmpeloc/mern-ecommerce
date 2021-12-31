@@ -1,8 +1,11 @@
 import express from 'express';
+import connectDB from './config/db.js';
 import config from './config/index.js';
 import routes from './routes/index.js';
 
 const server = express();
+
+connectDB();
 
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
