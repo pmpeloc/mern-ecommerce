@@ -15,3 +15,9 @@
 ## Shorcuts para el front:
 
 - `rafce`
+
+## Comandos para el backend:
+
+- `yarn add express`
+- `yarn add dotenv`
+- `yarn add -D nodemon`
