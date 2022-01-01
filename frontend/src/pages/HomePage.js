@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row, Spinner } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Product from '../components/Product';
 import { listProducts } from '../redux/actions/productActions';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -17,9 +19,9 @@ const HomePage = () => {
     <>
       <h1>Últimos Productos</h1>
       {loading ? (
-        <Spinner animation='border' variant='warning' />
+        <Loader />
       ) : error ? (
-        <h3>{error}</h3>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Row>
           {products.map((product) => (
