@@ -88,8 +88,7 @@ const ProductPage = () => {
                     <Row>
                       <Col>Qty</Col>
                       <Col>
-                        <Form.Control
-                          as='select'
+                        <Form.Select
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}>
                           {[...Array(product.countInStock).keys()].map((x) => (
@@ -97,7 +96,7 @@ const ProductPage = () => {
                               {x + 1}
                             </option>
                           ))}
-                        </Form.Control>
+                        </Form.Select>
                       </Col>
                     </Row>
                   </ListGroup.Item>
