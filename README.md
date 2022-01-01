@@ -7,6 +7,7 @@
 - `yarn add react-bootstrap`
 - `yarn add react-router-dom react-router-bootstrap`
 - `yarn add axios`
+- `yarn add redux react-redux redux-thunk redux-devtools-extension`
 
 ## Agregados para React Bootstrap:
 
