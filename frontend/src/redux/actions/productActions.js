@@ -5,7 +5,7 @@ export const listProducts = () => {
   return async (dispatch) => {
     try {
       dispatch({ type: actionTypes.PRODUCT_LIST_REQUEST });
-      const data = getProducts();
+      const data = await getProducts();
       dispatch({
         type: actionTypes.PRODUCT_LIST_SUCCESS,
         payload: data,
