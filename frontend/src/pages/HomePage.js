@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Product from '../components/Product';
-import productService from '../services/productService';
+import { getProducts } from '../services/productService';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    productService
-      .getProducts()
+    getProducts()
       .then((res) => {
         setProducts(res);
       })

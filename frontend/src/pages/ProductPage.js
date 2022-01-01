@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import Rating from '../components/Rating';
-import productService from '../services/productService';
+import { getProductById } from '../services/productService';
 
 const ProductPage = () => {
   const params = useParams();
@@ -10,8 +10,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    productService
-      .getProductById(params.id)
+    getProductById(params.id)
       .then((res) => {
         setProduct(res);
       })
