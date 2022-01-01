@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import Message from '../components/Message';
-import { addToCart } from '../redux/actions/cartActions';
+import { addToCart, removeFromCart } from '../redux/actions/cartActions';
 
 const CartPage = () => {
   const { id: productId } = useParams();
@@ -30,7 +30,7 @@ const CartPage = () => {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log('remove', id);
+    dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
