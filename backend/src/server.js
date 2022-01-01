@@ -1,9 +1,9 @@
 import express from 'express';
 import colors from 'colors';
-import asyncHandler from 'express-async-handler';
 import connectDB from './config/db.js';
 import config from './config/index.js';
 import routes from './routes/index.js';
+import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 
 const server = express();
 
@@ -14,12 +14,6 @@ server.use((req, res, next) => {
   next();
 });
 
-// Middlewares
-server.use((req, res, next) => {
-  asyncHandler();
-  next();
-});
-
 server.use(config.api.prefix, routes);
 
 // API status
@@ -27,13 +21,8 @@ server.get(config.api.prefix, (req, res) => {
   res.send('API is running...');
 });
 
-// Error catching endware.
-server.use((err, req, res, next) => {
-  // eslint-disable-line no-unused-vars
-  const status = err.status || 500;
-  const message = err.message || err;
-  console.error(err);
-  res.status(status).send(message);
-});
+// Middlewares
+server.use(notFound);
+server.use(errorHandler);
 
 export default server;
