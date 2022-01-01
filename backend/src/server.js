@@ -1,5 +1,6 @@
 import express from 'express';
 import colors from 'colors';
+import asyncHandler from 'express-async-handler';
 import connectDB from './config/db.js';
 import config from './config/index.js';
 import routes from './routes/index.js';
@@ -10,6 +11,12 @@ connectDB();
 
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  next();
+});
+
+// Middlewares
+server.use((req, res, next) => {
+  asyncHandler();
   next();
 });
 

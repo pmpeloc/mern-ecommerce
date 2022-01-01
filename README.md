@@ -25,3 +25,4 @@
 - `yarn add mongoose`
 - `yarn add bcryptjs`
 - `yarn add colors`
+- `yarn add express-async-handler`
