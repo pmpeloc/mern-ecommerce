@@ -1,21 +1,21 @@
-import hashPassword from '../services/hashPassword';
+import hashPassword from '../common/hashPassword.js';
 
 const users = [
   {
     name: 'Admin User',
-    emai: 'admin@example.com',
+    email: 'admin@example.com',
     password: hashPassword('123456'),
     isAdmin: true,
   },
   {
     name: 'John Doe',
-    emai: 'john@example.com',
+    email: 'john@example.com',
     password: hashPassword('123456'),
     isAdmin: false,
   },
   {
     name: 'Jane Doe',
-    emai: 'jane@example.com',
+    email: 'jane@example.com',
     password: hashPassword('123456'),
     isAdmin: false,
   },

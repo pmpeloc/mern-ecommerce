@@ -24,3 +24,4 @@
 - `yarn add -D nodemon`
 - `yarn add mongoose`
 - `yarn add bcryptjs`
+- `yarn add colors`
