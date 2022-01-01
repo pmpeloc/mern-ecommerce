@@ -7,6 +7,8 @@ import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 
 const server = express();
 
+server.use(express.json());
+
 connectDB();
 
 server.use((req, res, next) => {

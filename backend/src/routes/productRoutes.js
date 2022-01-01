@@ -4,16 +4,16 @@ import {
   getProductById,
 } from '../controllers/productController.js';
 
-const server = Router();
+const router = Router();
 
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
-server.get('/', getProducts);
+router.get('/', getProducts);
 
 // @desc    Fetch single product
 // @route   GET /api/products/:id
 // @access  Public
-server.get('/:id', getProductById);
+router.get('/:id', getProductById);
 
-export default server;
+export default router;
