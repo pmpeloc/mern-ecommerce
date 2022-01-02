@@ -36,3 +36,21 @@ export const registerUser = async (name, email, password) => {
     throw error;
   }
 };
+
+export const userDetails = async (endpoint, userInfo) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.get(
+      `${BASE_URL_BACK}/users/${endpoint}`,
+      config
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

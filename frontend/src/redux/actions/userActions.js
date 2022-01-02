@@ -1,4 +1,8 @@
-import { loginUser, registerUser } from '../../services/userServices';
+import {
+  loginUser,
+  registerUser,
+  userDetails,
+} from '../../services/userServices';
 import actionTypes from './action-types';
 
 export const login = (email, password) => {
@@ -51,6 +55,32 @@ export const register = (name, email, password) => {
     } catch (error) {
       dispatch({
         type: actionTypes.USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const getUserDetails = (enpoint) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.USER_DETAILS_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await userDetails(enpoint, userInfo);
+      dispatch({
+        type: actionTypes.USER_DETAILS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.USER_DETAILS_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
