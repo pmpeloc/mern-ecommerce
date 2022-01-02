@@ -4,8 +4,8 @@ import { Form, Button, Row, Col, FormGroup, FormLabel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { register } from '../redux/actions/userActions';
 import FormContainer from '../components/FormContainer';
+import { register } from '../redux/actions/userActions';
 
 const RegisterPage = () => {
   const [values, setValues] = useState({
@@ -93,7 +93,7 @@ const RegisterPage = () => {
       <Row className='py-3'>
         <Col>
           Ya tienes una cuenta?{' '}
-          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+          <Link to={redirect ? `/login?redirect=/${redirect}` : '/login'}>
             Iniciar Sesión
           </Link>
         </Col>

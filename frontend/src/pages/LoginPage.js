@@ -65,7 +65,7 @@ const LoginPage = () => {
       <Row className='py-3'>
         <Col>
           Eres un nuevo usuario?{' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
+          <Link to={redirect ? `/register?redirect=/${redirect}` : '/register'}>
             Crear Cuenta
           </Link>
         </Col>

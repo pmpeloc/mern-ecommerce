@@ -29,3 +29,13 @@ export const removeFromCart = (id) => {
     );
   };
 };
+
+export const saveShippingAddress = (data) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: actionTypes.CART_SAVE_SHIPPING_ADDRESS,
+      payload: data,
+    });
+    localStorage.setItem('shippingAddress', JSON.stringify(data));
+  };
+};
