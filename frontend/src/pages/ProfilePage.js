@@ -8,6 +8,7 @@ import {
   getUserDetails,
   updateUserProfile,
 } from '../redux/actions/userActions';
+import actionTypes from '../redux/actions/action-types';
 
 const ProfilePage = () => {
   const [values, setValues] = useState({
@@ -24,7 +25,7 @@ const ProfilePage = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const { success } = userUpdateProfile;
+  const { success, loading: loadingProfile } = userUpdateProfile;
 
   const navigate = useNavigate();
 
@@ -32,7 +33,8 @@ const ProfilePage = () => {
     if (!userInfo) {
       navigate('/');
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: actionTypes.USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails('profile'));
       } else {
         setValues({ ...values, name: user.name, email: user.email });
@@ -40,7 +42,7 @@ const ProfilePage = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate, dispatch, userInfo, user]);
+  }, [navigate, dispatch, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -50,8 +52,9 @@ const ProfilePage = () => {
       dispatch(
         updateUserProfile({
           _id: user.id,
-          name: user.name,
-          password: user.password,
+          name: values.name,
+          email: values.email,
+          password: values.password,
         })
       );
     }
@@ -61,10 +64,10 @@ const ProfilePage = () => {
     <Row>
       <Col md={3}>
         <h2>Mi perfil</h2>
-        {loading && <Loader />}
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
         {success && <Message variant='success'>Perfil actualizado</Message>}
+        {(loading || loadingProfile) && <Loader />}
         <Form onSubmit={submitHandler}>
           <FormGroup controlId='name' className='mb-2'>
             <FormLabel>Nombre</FormLabel>

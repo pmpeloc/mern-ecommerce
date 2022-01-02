@@ -105,9 +105,14 @@ export const updateUserProfile = (user) => {
         type: actionTypes.USER_UPDATE_PROFILE_SUCCESS,
         payload: data,
       });
+      dispatch({
+        type: actionTypes.USER_LOGIN_SUCCESS,
+        payload: data,
+      });
+      localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
       dispatch({
-        type: actionTypes.USER_DETAILS_FAIL,
+        type: actionTypes.USER_UPDATE_PROFILE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
