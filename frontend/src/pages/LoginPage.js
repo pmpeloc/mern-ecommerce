@@ -36,40 +36,46 @@ const LoginPage = () => {
     <FormContainer>
       <h1>Iniciar Sesión</h1>
       {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
-        <FormGroup controlId='email' className='mb-2'>
-          <FormLabel>Email</FormLabel>
-          <Form.Control
-            type='email'
-            placeholder='Ingrese su email'
-            value={values.email}
-            onChange={(e) =>
-              setValues({ ...values, email: e.target.value })
-            }></Form.Control>
-        </FormGroup>
-        <FormGroup controlId='password' className='mb-3'>
-          <FormLabel>Constraseña</FormLabel>
-          <Form.Control
-            type='password'
-            placeholder='Ingrese su contraseña'
-            value={values.password}
-            onChange={(e) =>
-              setValues({ ...values, password: e.target.value })
-            }></Form.Control>
-        </FormGroup>
-        <Button type='submit' variant='primary'>
-          Iniciar Sesión
-        </Button>
-      </Form>
-      <Row className='py-3'>
-        <Col>
-          Eres un nuevo usuario?{' '}
-          <Link to={redirect ? `/register?redirect=/${redirect}` : '/register'}>
-            Crear Cuenta
-          </Link>
-        </Col>
-      </Row>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Form onSubmit={submitHandler}>
+            <FormGroup controlId='email' className='mb-2'>
+              <FormLabel>Email</FormLabel>
+              <Form.Control
+                type='email'
+                placeholder='Ingrese su email'
+                value={values.email}
+                onChange={(e) =>
+                  setValues({ ...values, email: e.target.value })
+                }></Form.Control>
+            </FormGroup>
+            <FormGroup controlId='password' className='mb-3'>
+              <FormLabel>Constraseña</FormLabel>
+              <Form.Control
+                type='password'
+                placeholder='Ingrese su contraseña'
+                value={values.password}
+                onChange={(e) =>
+                  setValues({ ...values, password: e.target.value })
+                }></Form.Control>
+            </FormGroup>
+            <Button type='submit' variant='primary'>
+              Iniciar Sesión
+            </Button>
+          </Form>
+          <Row className='py-3'>
+            <Col>
+              Eres un nuevo usuario?{' '}
+              <Link
+                to={redirect ? `/register?redirect=/${redirect}` : '/register'}>
+                Crear Cuenta
+              </Link>
+            </Col>
+          </Row>
+        </>
+      )}
     </FormContainer>
   );
 };
