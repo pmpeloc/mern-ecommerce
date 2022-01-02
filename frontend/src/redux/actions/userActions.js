@@ -7,7 +7,7 @@ export const login = (email, password) => {
       dispatch({
         type: actionTypes.USER_LOGIN_REQUEST,
       });
-      const data = loginUser(email, password);
+      const data = await loginUser(email, password);
       dispatch({
         type: actionTypes.USER_LOGIN_SUCCESS,
         payload: data,

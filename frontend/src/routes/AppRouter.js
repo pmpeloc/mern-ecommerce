@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CartPage from '../pages/CartPage';
 import HomePage from '../pages/HomePage';
+import LoginPage from '../pages/LoginPage';
 import ProductPage from '../pages/ProductPage';
 
 const AppRouter = () => {
@@ -20,6 +21,7 @@ const AppRouter = () => {
               <Route path=':id' element={<CartPage />} />
               <Route path='' element={<CartPage />} />
             </Route>
+            <Route path='/login' element={<LoginPage />} />
             <Route
               path='*'
               element={
