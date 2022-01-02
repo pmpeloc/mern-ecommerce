@@ -20,8 +20,8 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     throw new Error('No order items');
   } else {
     const order = new Order({
-      orderItems,
       user: req.user._id,
+      orderItems,
       shippingAddress,
       paymentMethod,
       itemsPrice,

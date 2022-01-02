@@ -7,6 +7,6 @@ import orderRouter from './orderRoutes.js';
 
 router.use('/products', productRouter);
 router.use('/users', userRouter);
-router.use('/orders', userRouter);
+router.use('/orders', orderRouter);
 
 export default router;

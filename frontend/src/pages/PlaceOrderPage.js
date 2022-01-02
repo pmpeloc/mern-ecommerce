@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { Link } from 'react-router-dom';
+import { createOrder } from '../redux/actions/orderActions';
 
 const PlaceOrderPage = () => {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const {
     shippingAddress: { address, city, postalCode, country },
     paymentMethod,
     cartItems,
   } = cart;
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  const navigate = useNavigate();
 
   // Calculate prices
   cart.itemsPrice = cartItems.reduce(
@@ -26,8 +32,25 @@ const PlaceOrderPage = () => {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice);
 
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, success]);
+
   const placeOrderHandler = () => {
-    console.log('enviar');
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
   return (
     <>
@@ -110,6 +133,9 @@ const PlaceOrderPage = () => {
                   <Col>Total</Col>
                   <Col>$ {cart.totalPrice.toFixed(2)}</Col>
                 </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Message variant='danger'>{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item className='d-grid'>
                 <Button
