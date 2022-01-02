@@ -1,4 +1,4 @@
-import { getProductById } from '../../services/productService';
+import { getProductById } from '../../services/productServices';
 import actionTypes from './action-types';
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {

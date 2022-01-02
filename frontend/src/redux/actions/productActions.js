@@ -1,5 +1,5 @@
 import actionTypes from './action-types';
-import { getProductById, getProducts } from '../../services/productService';
+import { getProductById, getProducts } from '../../services/productServices';
 
 export const listProducts = () => {
   return async (dispatch) => {
