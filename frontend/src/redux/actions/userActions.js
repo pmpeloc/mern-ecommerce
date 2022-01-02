@@ -2,6 +2,7 @@ import {
   loginUser,
   registerUser,
   userDetails,
+  userUpdateProfile,
 } from '../../services/userServices';
 import actionTypes from './action-types';
 
@@ -64,7 +65,7 @@ export const register = (name, email, password) => {
   };
 };
 
-export const getUserDetails = (enpoint) => {
+export const getUserDetails = (endpoint) => {
   return async (dispatch, getState) => {
     try {
       dispatch({
@@ -73,9 +74,35 @@ export const getUserDetails = (enpoint) => {
       const {
         userLogin: { userInfo },
       } = getState();
-      const data = await userDetails(enpoint, userInfo);
+      const data = await userDetails(endpoint, userInfo);
       dispatch({
         type: actionTypes.USER_DETAILS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.USER_DETAILS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const updateUserProfile = (user) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.USER_UPDATE_PROFILE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await userUpdateProfile(user, userInfo);
+      dispatch({
+        type: actionTypes.USER_UPDATE_PROFILE_SUCCESS,
         payload: data,
       });
     } catch (error) {

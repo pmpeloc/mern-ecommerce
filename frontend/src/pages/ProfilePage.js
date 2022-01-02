@@ -4,7 +4,10 @@ import { Form, Button, Row, Col, FormGroup, FormLabel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getUserDetails } from '../redux/actions/userActions';
+import {
+  getUserDetails,
+  updateUserProfile,
+} from '../redux/actions/userActions';
 
 const ProfilePage = () => {
   const [values, setValues] = useState({
@@ -20,6 +23,8 @@ const ProfilePage = () => {
   const { loading, error, user } = userDetails;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
 
   const navigate = useNavigate();
 
@@ -42,7 +47,13 @@ const ProfilePage = () => {
     if (values.password !== values.confirmPassword) {
       setMessage('Las contraseñas no son iguales');
     } else {
-      // dispatch(register(values.name, values.email, values.password));
+      dispatch(
+        updateUserProfile({
+          _id: user.id,
+          name: user.name,
+          password: user.password,
+        })
+      );
     }
   };
 
@@ -50,9 +61,10 @@ const ProfilePage = () => {
     <Row>
       <Col md={3}>
         <h2>Mi perfil</h2>
+        {loading && <Loader />}
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
-        {loading && <Loader />}
+        {success && <Message variant='success'>Perfil actualizado</Message>}
         <Form onSubmit={submitHandler}>
           <FormGroup controlId='name' className='mb-2'>
             <FormLabel>Nombre</FormLabel>

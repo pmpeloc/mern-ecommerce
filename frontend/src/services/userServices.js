@@ -54,3 +54,22 @@ export const userDetails = async (endpoint, userInfo) => {
     throw error;
   }
 };
+
+export const userUpdateProfile = async (user, userInfo) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL_BACK}/users/profile`,
+      user,
+      config
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
