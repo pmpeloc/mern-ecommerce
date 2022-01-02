@@ -24,3 +24,10 @@ export const login = (email, password) => {
     }
   };
 };
+
+export const logout = () => {
+  return (dispatch) => {
+    localStorage.removeItem('userInfo');
+    dispatch({ type: actionTypes.USER_LOGIN_LOGOUT });
+  };
+};
