@@ -1,4 +1,5 @@
 import {
+  getMyOrders,
   getOrderById,
   postNewOrder,
   putOrderToPay,
@@ -74,6 +75,32 @@ export const payOrder = (orderId, paymentResult) => {
     } catch (error) {
       dispatch({
         type: actionTypes.ORDER_PAY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const listMyOrders = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.ORDER_LIST_MY_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await getMyOrders(userInfo);
+      dispatch({
+        type: actionTypes.ORDER_LIST_MY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.ORDER_LIST_MY_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

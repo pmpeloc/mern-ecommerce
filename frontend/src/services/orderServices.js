@@ -48,3 +48,20 @@ export const putOrderToPay = async (orderId, paymentResult, userInfo) => {
     throw error;
   }
 };
+
+export const getMyOrders = async (userInfo) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.get(
+      `${BASE_URL_BACK}/orders/myorders`,
+      config
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
