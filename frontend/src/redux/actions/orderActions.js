@@ -1,4 +1,8 @@
-import { getOrderById, postNewOrder } from '../../services/orderServices';
+import {
+  getOrderById,
+  postNewOrder,
+  putOrderToPay,
+} from '../../services/orderServices';
 import actionTypes from './action-types';
 
 export const createOrder = (order) => {
@@ -44,6 +48,32 @@ export const getOrderDetails = (id) => {
     } catch (error) {
       dispatch({
         type: actionTypes.ORDER_DETAILS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const payOrder = (orderId, paymentResult) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.ORDER_PAY_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await putOrderToPay(orderId, paymentResult, userInfo);
+      dispatch({
+        type: actionTypes.ORDER_PAY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.ORDER_PAY_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

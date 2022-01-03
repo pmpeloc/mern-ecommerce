@@ -29,3 +29,22 @@ export const getOrderById = async (id, userInfo) => {
     throw error;
   }
 };
+
+export const putOrderToPay = async (orderId, paymentResult, userInfo) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL_BACK}/orders/${orderId}/pay`,
+      paymentResult,
+      config
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

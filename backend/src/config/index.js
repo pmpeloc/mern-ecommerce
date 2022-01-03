@@ -26,7 +26,7 @@ export default {
    */
   jwtSecret: process.env.JWT_SECRET,
   // jwtAlgorithm: process.env.JWT_ALGO,
-
+  payPal: process.env.PAYPAL_CLIENT_ID,
   /**
    * API configs
    */

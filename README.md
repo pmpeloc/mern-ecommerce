@@ -8,6 +8,7 @@
 - `yarn add react-router-dom react-router-bootstrap`
 - `yarn add axios`
 - `yarn add redux react-redux redux-thunk redux-devtools-extension`
+- `yarn add react-paypal-button-v2`
 
 ## Agregados para React Bootstrap:
 
