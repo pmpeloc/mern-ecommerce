@@ -162,10 +162,9 @@ export const deleteUser = (id) => {
       const {
         userLogin: { userInfo },
       } = getState();
-      const data = await deleteAUser(id, userInfo);
+      await deleteAUser(id, userInfo);
       dispatch({
         type: actionTypes.USER_DELETE_SUCCESS,
-        payload: data,
       });
     } catch (error) {
       dispatch({
