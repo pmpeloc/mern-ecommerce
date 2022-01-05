@@ -1,5 +1,6 @@
 import actionTypes from './action-types';
 import {
+  createAProduct,
   deleteAProduct,
   getProductById,
   getProducts,
@@ -63,6 +64,32 @@ export const deleteProduct = (id) => {
     } catch (error) {
       dispatch({
         type: actionTypes.PRODUCT_DELETE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const createProduct = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.PRODUCT_CREATE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await createAProduct(userInfo);
+      dispatch({
+        type: actionTypes.PRODUCT_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PRODUCT_CREATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

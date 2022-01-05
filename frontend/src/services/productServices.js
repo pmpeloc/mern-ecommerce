@@ -35,3 +35,17 @@ export const deleteAProduct = async (id, userInfo) => {
     throw error;
   }
 };
+
+export const createAProduct = async (userInfo) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.post(`${BASE_URL_BACK}/products`, {}, config);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

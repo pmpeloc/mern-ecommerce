@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { deleteProduct, listProducts } from '../redux/actions/productActions';
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from '../redux/actions/productActions';
+import actionTypes from '../redux/actions/action-types';
 
 const ProductListPage = () => {
   const productList = useSelector((state) => state.productList);
@@ -16,6 +21,13 @@ const ProductListPage = () => {
     error: errorDelete,
     success: successDelete,
   } = productDelete;
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -24,12 +36,23 @@ const ProductListPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    if (!userInfo.isAdmin) {
       navigate('/login');
     }
-  }, [dispatch, navigate, userInfo, successDelete]);
+    if (successCreate) {
+      dispatch({ type: actionTypes.PRODUCT_CREATE_RESET });
+      navigate(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    navigate,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteHandler = (productId) => {
     if (window.confirm('¿Está seguro de eliminar este producto?')) {
@@ -38,7 +61,7 @@ const ProductListPage = () => {
   };
 
   const createProductHandler = () => {
-    console.log('Create');
+    dispatch(createProduct());
   };
 
   return (
@@ -55,6 +78,8 @@ const ProductListPage = () => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
