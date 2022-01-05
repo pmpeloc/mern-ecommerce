@@ -13,6 +13,7 @@ import ProductPage from '../pages/ProductPage';
 import ProfilePage from '../pages/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
 import ShippingPage from '../pages/ShippingPage';
+import UsersListPage from '../pages/UsersListPage';
 
 const AppRouter = () => {
   return (
@@ -33,6 +34,7 @@ const AppRouter = () => {
             <Route path='/shipping' element={<ShippingPage />} />
             <Route path='/payment' element={<PaymentPage />} />
             <Route path='/placeorder' element={<PlaceOrderPage />} />
+            <Route path='/admin/userlist' element={<UsersListPage />} />
             <Route path='/order/:id' element={<OrderPage />} />
             <Route
               path='*'
