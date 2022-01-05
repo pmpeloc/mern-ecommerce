@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { getUserDetails } from '../redux/actions/userActions';
+import { getUserDetails, updateUser } from '../redux/actions/userActions';
 import { Link } from 'react-router-dom';
+import actionTypes from '../redux/actions/action-types';
 
 const UserEditPage = () => {
   const [values, setValues] = useState({
@@ -18,30 +19,56 @@ const UserEditPage = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
 
   const navigate = useNavigate();
   const params = useParams();
   const userId = params.id;
 
   useEffect(() => {
-    if (!user.name || user._id !== userId) {
-      dispatch(getUserDetails(userId));
+    if (successUpdate) {
+      dispatch({ type: actionTypes.USER_UPDATE_RESET });
+      navigate('/admin/userlist');
     } else {
-      setValues({ name: user.name, email: user.email, isAdmin: user.isAdmin });
+      if (!user.name || user._id !== userId) {
+        dispatch(getUserDetails(userId));
+      } else {
+        setValues({
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+        });
+      }
     }
-  }, [dispatch, user, userId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, user, userId, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      updateUser({
+        _id: userId,
+        name: values.name,
+        email: values.email,
+        isAdmin: values.isAdmin,
+      })
+    );
   };
 
   return (
     <>
       <Link to='/admin/userlist' className='btn btn-light my-3'>
-        Volver atrás
+        Regresar
       </Link>
       <FormContainer>
         <h1>Editar Usuario</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (

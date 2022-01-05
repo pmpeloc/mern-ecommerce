@@ -3,6 +3,7 @@ import {
   getUsers,
   loginUser,
   registerUser,
+  updateAUser,
   userDetails,
   userUpdateProfile,
 } from '../../services/userServices';
@@ -169,6 +170,32 @@ export const deleteUser = (id) => {
     } catch (error) {
       dispatch({
         type: actionTypes.USER_DELETE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const updateUser = (user) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.USER_UPDATE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await updateAUser(user, userInfo);
+      dispatch({
+        type: actionTypes.USER_UPDATE_SUCCESS,
+      });
+      dispatch({ type: actionTypes.USER_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.USER_UPDATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

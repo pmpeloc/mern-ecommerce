@@ -101,3 +101,22 @@ export const deleteAUser = async (id, userInfo) => {
     throw error;
   }
 };
+
+export const updateAUser = async (user, userInfo) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL_BACK}/users/${user._id}`,
+      user,
+      config
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
