@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Button, FormGroup, FormLabel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { Link } from 'react-router-dom';
-import { listProductsDetails } from '../redux/actions/productActions';
+import {
+  listProductsDetails,
+  updateProduct,
+} from '../redux/actions/productActions';
+import actionTypes from '../redux/actions/action-types';
 
 const ProductEditPage = () => {
   const [values, setValues] = useState({
@@ -22,30 +26,47 @@ const ProductEditPage = () => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate;
 
   const params = useParams();
   const productId = params.id;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!product.name || product._id !== productId) {
-      dispatch(listProductsDetails(productId));
+    if (successUpdate) {
+      dispatch({ type: actionTypes.PRODUCT_UPDATE_RESET });
+      navigate('/admin/productlist');
     } else {
-      setValues({
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        brand: product.brand,
-        category: product.category,
-        countInStock: product.countInStock,
-        description: product.description,
-      });
+      if (!product.name || product._id !== productId) {
+        dispatch(listProductsDetails(productId));
+      } else {
+        setValues({
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          brand: product.brand,
+          category: product.category,
+          countInStock: product.countInStock,
+          description: product.description,
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, product, productId]);
+  }, [dispatch, product, productId, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // Update product
+    dispatch(
+      updateProduct({
+        ...values,
+        _id: productId,
+      })
+    );
   };
 
   return (
@@ -55,6 +76,8 @@ const ProductEditPage = () => {
       </Link>
       <FormContainer>
         <h1>Editar Producto</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (

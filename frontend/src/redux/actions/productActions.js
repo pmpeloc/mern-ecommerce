@@ -4,6 +4,7 @@ import {
   deleteAProduct,
   getProductById,
   getProducts,
+  updateAProduct,
 } from '../../services/productServices';
 
 export const listProducts = () => {
@@ -90,6 +91,32 @@ export const createProduct = () => {
     } catch (error) {
       dispatch({
         type: actionTypes.PRODUCT_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const updateProduct = (product) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.PRODUCT_UPDATE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await updateAProduct(product, userInfo);
+      dispatch({
+        type: actionTypes.PRODUCT_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PRODUCT_UPDATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
