@@ -5,11 +5,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listProducts } from '../redux/actions/productActions';
+import { deleteProduct, listProducts } from '../redux/actions/productActions';
 
 const ProductListPage = () => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -23,11 +29,11 @@ const ProductListPage = () => {
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, userInfo]);
+  }, [dispatch, navigate, userInfo, successDelete]);
 
   const deleteHandler = (productId) => {
     if (window.confirm('¿Está seguro de eliminar este producto?')) {
-      // DELETE PRODUCT
+      dispatch(deleteProduct(productId));
     }
   };
 
@@ -47,6 +53,8 @@ const ProductListPage = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

@@ -1,5 +1,9 @@
 import actionTypes from './action-types';
-import { getProductById, getProducts } from '../../services/productServices';
+import {
+  deleteAProduct,
+  getProductById,
+  getProducts,
+} from '../../services/productServices';
 
 export const listProducts = () => {
   return async (dispatch) => {
@@ -34,6 +38,31 @@ export const listProductsDetails = (id) => {
     } catch (error) {
       dispatch({
         type: actionTypes.PRODUCT_DETAILS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.PRODUCT_DELETE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      await deleteAProduct(id, userInfo);
+      dispatch({
+        type: actionTypes.PRODUCT_DELETE_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PRODUCT_DELETE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
