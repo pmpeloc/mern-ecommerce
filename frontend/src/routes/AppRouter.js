@@ -9,6 +9,7 @@ import LoginPage from '../pages/LoginPage';
 import OrderPage from '../pages/OrderPage';
 import PaymentPage from '../pages/PaymentPage';
 import PlaceOrderPage from '../pages/PlaceOrderPage';
+import ProductEditPage from '../pages/ProductEditPage';
 import ProductListPage from '../pages/ProductListPage';
 import ProductPage from '../pages/ProductPage';
 import ProfilePage from '../pages/ProfilePage';
@@ -39,6 +40,10 @@ const AppRouter = () => {
             <Route path='/admin/userlist' element={<UserListPage />} />
             <Route path='/admin/user/:id/edit' element={<UserEditPage />} />
             <Route path='/admin/productlist' element={<ProductListPage />} />
+            <Route
+              path='/admin/product/:id/edit'
+              element={<ProductEditPage />}
+            />
             <Route path='/order/:id' element={<OrderPage />} />
             <Route
               path='*'
