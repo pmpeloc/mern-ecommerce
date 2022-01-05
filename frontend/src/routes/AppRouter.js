@@ -9,12 +9,13 @@ import LoginPage from '../pages/LoginPage';
 import OrderPage from '../pages/OrderPage';
 import PaymentPage from '../pages/PaymentPage';
 import PlaceOrderPage from '../pages/PlaceOrderPage';
+import ProductListPage from '../pages/ProductListPage';
 import ProductPage from '../pages/ProductPage';
 import ProfilePage from '../pages/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
 import ShippingPage from '../pages/ShippingPage';
 import UserEditPage from '../pages/UserEditPage';
-import UsersListPage from '../pages/UsersListPage';
+import UserListPage from '../pages/UserListPage';
 
 const AppRouter = () => {
   return (
@@ -35,8 +36,9 @@ const AppRouter = () => {
             <Route path='/shipping' element={<ShippingPage />} />
             <Route path='/payment' element={<PaymentPage />} />
             <Route path='/placeorder' element={<PlaceOrderPage />} />
-            <Route path='/admin/userlist' element={<UsersListPage />} />
+            <Route path='/admin/userlist' element={<UserListPage />} />
             <Route path='/admin/user/:id/edit' element={<UserEditPage />} />
+            <Route path='/admin/productlist' element={<ProductListPage />} />
             <Route path='/order/:id' element={<OrderPage />} />
             <Route
               path='*'
