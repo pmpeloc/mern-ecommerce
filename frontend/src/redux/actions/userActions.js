@@ -1,4 +1,5 @@
 import {
+  deleteAUser,
   getUsers,
   loginUser,
   registerUser,
@@ -143,6 +144,32 @@ export const listUsers = () => {
     } catch (error) {
       dispatch({
         type: actionTypes.USER_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const deleteUser = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.USER_DELETE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await deleteAUser(id, userInfo);
+      dispatch({
+        type: actionTypes.USER_DELETE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.USER_DELETE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

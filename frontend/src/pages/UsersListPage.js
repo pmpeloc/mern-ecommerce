@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listUsers } from '../redux/actions/userActions';
+import { deleteUser, listUsers } from '../redux/actions/userActions';
 
 const UsersListPage = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
 
   const dispatch = useDispatch();
 
@@ -23,10 +25,12 @@ const UsersListPage = () => {
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, userInfo]);
+  }, [dispatch, navigate, userInfo, successDelete]);
 
   const deleteHandler = (userId) => {
-    console.log('eliminar', userId);
+    if (window.confirm('¿Está seguro de eliminar este usuario?')) {
+      dispatch(deleteUser(userId));
+    }
   };
 
   return (

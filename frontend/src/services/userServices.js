@@ -87,3 +87,17 @@ export const getUsers = async (userInfo) => {
     throw error;
   }
 };
+
+export const deleteAUser = async (id, userInfo) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.delete(`${BASE_URL_BACK}/users/${id}`, config);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
