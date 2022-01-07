@@ -29,3 +29,4 @@
 - `yarn add colors`
 - `yarn add express-async-handler`
 - `yarn add jsonwebtoken`
+- `yarn add multer`

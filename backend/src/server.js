@@ -1,5 +1,6 @@
 import express from 'express';
 import colors from 'colors';
+import path from 'path';
 import connectDB from './config/db.js';
 import config from './config/index.js';
 import routes from './routes/index.js';
@@ -24,6 +25,10 @@ server.use(config.api.prefix, routes);
 server.get(config.api.prefix, (req, res) => {
   res.send('API is running...');
 });
+
+// Upload folder
+const __dirname = path.resolve();
+server.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Middlewares
 server.use(notFound);
