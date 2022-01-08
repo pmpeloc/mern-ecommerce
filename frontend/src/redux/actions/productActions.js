@@ -1,6 +1,7 @@
 import actionTypes from './action-types';
 import {
   createAProduct,
+  createAProductReview,
   deleteAProduct,
   getProductById,
   getProducts,
@@ -144,6 +145,31 @@ export const uploadImage = (image) => {
     } catch (error) {
       dispatch({
         type: actionTypes.PRODUCT_UPLOAD_IMAGE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const createProductReview = (productId, review) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.PRODUCT_CREATE_REVIEW_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      await createAProductReview(productId, review, userInfo);
+      dispatch({
+        type: actionTypes.PRODUCT_CREATE_REVIEW_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PRODUCT_CREATE_REVIEW_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

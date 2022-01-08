@@ -87,3 +87,22 @@ export const upload = async (formData, userInfo) => {
     throw error;
   }
 };
+
+export const createAProductReview = async (productId, review, userInfo) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.post(
+      `${BASE_URL_BACK}/products/${productId}/reviews`,
+      review,
+      config
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
