@@ -1,5 +1,6 @@
 import express from 'express';
 import colors from 'colors';
+import morgan from 'morgan';
 import path from 'path';
 import connectDB from './config/db.js';
 import config from './config/index.js';
@@ -9,6 +10,11 @@ import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 const server = express();
 
 server.use(express.json());
+
+// Logger
+if (config.nodeEnv === 'development') {
+  server.use(morgan('dev'));
+}
 
 connectDB();
 

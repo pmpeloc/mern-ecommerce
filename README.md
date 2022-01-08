@@ -30,3 +30,4 @@
 - `yarn add express-async-handler`
 - `yarn add jsonwebtoken`
 - `yarn add multer`
+- `yarn add morgan`

@@ -199,16 +199,19 @@ const OrderPage = () => {
                 </ListGroup.Item>
               )}
               {loadingDeliver && <Loader />}
-              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                <ListGroup.Item className='d-grid'>
-                  <Button
-                    type='button'
-                    className='btn'
-                    onClick={deliverHandler}>
-                    Marcar como Enviado
-                  </Button>
-                </ListGroup.Item>
-              )}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item className='d-grid'>
+                    <Button
+                      type='button'
+                      className='btn'
+                      onClick={deliverHandler}>
+                      Marcar como Enviado
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
