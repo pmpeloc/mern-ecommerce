@@ -3,6 +3,7 @@ import {
   getOrderById,
   getOrders,
   postNewOrder,
+  putOrderToDeliver,
   putOrderToPay,
 } from '../../services/orderServices';
 import actionTypes from './action-types';
@@ -76,6 +77,32 @@ export const payOrder = (orderId, paymentResult) => {
     } catch (error) {
       dispatch({
         type: actionTypes.ORDER_PAY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const deliverOrder = (order) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.ORDER_DELIVER_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await putOrderToDeliver(order._id, userInfo);
+      dispatch({
+        type: actionTypes.ORDER_DELIVER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.ORDER_DELIVER_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
