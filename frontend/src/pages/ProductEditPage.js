@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import {
   listProductsDetails,
   updateProduct,
+  uploadImage,
 } from '../redux/actions/productActions';
 import actionTypes from '../redux/actions/action-types';
 
@@ -32,6 +33,13 @@ const ProductEditPage = () => {
     error: errorUpdate,
     success: successUpdate,
   } = productUpdate;
+  const productUploadImage = useSelector((state) => state.productUploadImage);
+  const {
+    loading: uploading,
+    error: errorUploading,
+    success: successUploading,
+    productImage,
+  } = productUploadImage;
 
   const params = useParams();
   const productId = params.id;
@@ -58,6 +66,20 @@ const ProductEditPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, product, productId, successUpdate]);
+
+  useEffect(() => {
+    if (successUploading) {
+      setValues({ ...values, image: productImage });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [successUploading]);
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    dispatch(uploadImage(formData));
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -107,12 +129,21 @@ const ProductEditPage = () => {
             <FormGroup controlId='image' className='mb-2'>
               <FormLabel>Foto</FormLabel>
               <Form.Control
+                className='mb-3'
                 type='text'
                 placeholder='Ingrese la url de la imagen'
                 value={values.image}
                 onChange={(e) =>
                   setValues({ ...values, image: e.target.value })
                 }></Form.Control>
+              <Form.Control
+                type='file'
+                label='Seleccionar imagen'
+                onChange={uploadFileHandler}></Form.Control>
+              {uploading && <Loader />}
+              {errorUploading && (
+                <Message variant='danger'>{errorUploading}</Message>
+              )}
             </FormGroup>
             <FormGroup controlId='brand' className='mb-2'>
               <FormLabel>Marca</FormLabel>

@@ -5,6 +5,7 @@ import {
   getProductById,
   getProducts,
   updateAProduct,
+  upload,
 } from '../../services/productServices';
 
 export const listProducts = () => {
@@ -117,6 +118,32 @@ export const updateProduct = (product) => {
     } catch (error) {
       dispatch({
         type: actionTypes.PRODUCT_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const uploadImage = (image) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.PRODUCT_UPLOAD_IMAGE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await upload(image, userInfo);
+      dispatch({
+        type: actionTypes.PRODUCT_UPLOAD_IMAGE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PRODUCT_UPLOAD_IMAGE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

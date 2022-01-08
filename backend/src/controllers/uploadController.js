@@ -3,6 +3,8 @@ import path from 'path';
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
+    // const folder = path.resolve().replace('backend', 'uploads');
+    debugger;
     cb(null, 'uploads/');
   },
   filename(req, file, cb) {
@@ -25,18 +27,16 @@ const checkFileType = (file, cb) => {
   }
 };
 
-const uploadConfig = multer({
+export const uploadConfig = multer({
   storage,
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
 });
 
-uploadConfig.single('image');
-
 // @desc    Upload a image
-// @route   POST /api
+// @route   POST /api/upload
 // @access  Private/Admin
 export const upload = (req, res) => {
-  res.send(`/${req.file.path}`);
+  res.send(`/${req.file.path.replace(/\\/g, '/')}`);
 };

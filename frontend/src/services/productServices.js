@@ -68,3 +68,22 @@ export const updateAProduct = async (product, userInfo) => {
     throw error;
   }
 };
+
+export const upload = async (formData, userInfo) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.post(
+      `${BASE_URL_BACK}/upload`,
+      formData,
+      config
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
