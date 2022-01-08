@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { BASE_URL_BACK } from '../config';
 
-export const getProducts = async () => {
+export const getProducts = async (keyword) => {
   try {
-    const { data } = await axios.get(`${BASE_URL_BACK}/products`);
+    const { data } = await axios.get(
+      `${BASE_URL_BACK}/products?keyword=${keyword}`
+    );
     return data;
   } catch (error) {
     throw error;

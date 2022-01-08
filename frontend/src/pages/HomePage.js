@@ -5,15 +5,19 @@ import Product from '../components/Product';
 import { listProducts } from '../redux/actions/productActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { useParams } from 'react-router-dom';
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  const params = useParams();
+  const { keyword } = params;
+
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>

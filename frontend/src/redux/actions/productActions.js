@@ -9,11 +9,11 @@ import {
   upload,
 } from '../../services/productServices';
 
-export const listProducts = () => {
+export const listProducts = (keyword = '') => {
   return async (dispatch) => {
     try {
       dispatch({ type: actionTypes.PRODUCT_LIST_REQUEST });
-      const data = await getProducts();
+      const data = await getProducts(keyword);
       dispatch({
         type: actionTypes.PRODUCT_LIST_SUCCESS,
         payload: data,
