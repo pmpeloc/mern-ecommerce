@@ -3,13 +3,15 @@ import {
   addOrderItems,
   getMyOrders,
   getOrderById,
+  getOrders,
   updateOrderToPaid,
 } from '../controllers/orderController.js';
-import { protect } from '../middlewares/authMiddleware.js';
+import { admin, protect } from '../middlewares/authMiddleware.js';
 
 const router = Router();
 
 router.post('/', protect, addOrderItems);
+router.get('/', protect, admin, getOrders);
 router.get('/myorders', protect, getMyOrders);
 router.get('/:id', protect, getOrderById);
 router.put('/:id/pay', protect, updateOrderToPaid);

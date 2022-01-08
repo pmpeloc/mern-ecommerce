@@ -65,3 +65,17 @@ export const getMyOrders = async (userInfo) => {
     throw error;
   }
 };
+
+export const getOrders = async (userInfo) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.get(`${BASE_URL_BACK}/orders`, config);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

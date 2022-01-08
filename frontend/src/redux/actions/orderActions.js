@@ -1,6 +1,7 @@
 import {
   getMyOrders,
   getOrderById,
+  getOrders,
   postNewOrder,
   putOrderToPay,
 } from '../../services/orderServices';
@@ -101,6 +102,32 @@ export const listMyOrders = () => {
     } catch (error) {
       dispatch({
         type: actionTypes.ORDER_LIST_MY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const listOrders = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.ORDER_LIST_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const data = await getOrders(userInfo);
+      dispatch({
+        type: actionTypes.ORDER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.ORDER_LIST_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

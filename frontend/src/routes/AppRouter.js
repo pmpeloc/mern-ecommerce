@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import CartPage from '../pages/CartPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
+import OrderListPage from '../pages/OrderListPage';
 import OrderPage from '../pages/OrderPage';
 import PaymentPage from '../pages/PaymentPage';
 import PlaceOrderPage from '../pages/PlaceOrderPage';
@@ -40,6 +41,7 @@ const AppRouter = () => {
             <Route path='/admin/userlist' element={<UserListPage />} />
             <Route path='/admin/user/:id/edit' element={<UserEditPage />} />
             <Route path='/admin/productlist' element={<ProductListPage />} />
+            <Route path='/admin/orderlist' element={<OrderListPage />} />
             <Route
               path='/admin/product/:id/edit'
               element={<ProductEditPage />}
