@@ -33,7 +33,7 @@ server.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Frontend production
 if (config.nodeEnv === 'production') {
-  server.use(express.static(path.join(__dirname, '../frontend/build')));
+  server.use(express.static(path.join(__dirname, 'frontend/build')));
   server.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
   );
