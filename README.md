@@ -46,3 +46,7 @@
 - `heroku create tiendavirtualmern`
 - `heroku git:remote -a tiendavirtualmern`
 - `git push heroku master`
+
+## Help Deploy
+
+https://stackoverflow.com/questions/39197334/automated-heroku-deploy-from-subfolder
