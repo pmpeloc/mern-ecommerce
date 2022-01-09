@@ -32,3 +32,7 @@
 - `yarn add jsonwebtoken`
 - `yarn add multer`
 - `yarn add morgan`
+
+## Deployment Frontend
+
+- `yarn build`
