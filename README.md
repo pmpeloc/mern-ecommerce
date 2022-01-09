@@ -27,6 +27,8 @@
 - `yarn add -D nodemon`
 - `yarn add mongoose`
 - `yarn add bcryptjs`
+- `yarn run create`
+- `yarn run destroy`
 - `yarn add colors`
 - `yarn add express-async-handler`
 - `yarn add jsonwebtoken`
@@ -36,3 +38,9 @@
 ## Deployment Frontend
 
 - `yarn build`
+
+## Deployment Heroku
+
+- `heroku --version`
+- `heroku login`
+- `heroku create tiendavirtualmern`
