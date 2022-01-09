@@ -86,12 +86,16 @@ export const getUserDetails = (endpoint) => {
         payload: data,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.USER_DETAILS_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
@@ -117,12 +121,16 @@ export const updateUserProfile = (user) => {
       });
       localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.USER_UPDATE_PROFILE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
@@ -143,12 +151,16 @@ export const listUsers = () => {
         payload: data,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.USER_LIST_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
@@ -168,12 +180,16 @@ export const deleteUser = (id) => {
         type: actionTypes.USER_DELETE_SUCCESS,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.USER_DELETE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
@@ -193,13 +209,18 @@ export const updateUser = (user) => {
         type: actionTypes.USER_UPDATE_SUCCESS,
       });
       dispatch({ type: actionTypes.USER_DETAILS_SUCCESS, payload: data });
+      dispatch({ type: actionTypes.USER_DETAILS_RESET });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.USER_UPDATE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };

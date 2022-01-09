@@ -9,6 +9,7 @@ import {
   updateAProduct,
   upload,
 } from '../../services/productServices';
+import { logout } from './userActions';
 
 export const listProducts = (keyword = '', pageNumber = '') => {
   return async (dispatch) => {
@@ -66,12 +67,16 @@ export const deleteProduct = (id) => {
         type: actionTypes.PRODUCT_DELETE_SUCCESS,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.PRODUCT_DELETE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
@@ -92,12 +97,16 @@ export const createProduct = () => {
         payload: data,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.PRODUCT_CREATE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
@@ -118,12 +127,16 @@ export const updateProduct = (product) => {
         payload: data,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.PRODUCT_UPDATE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
@@ -169,12 +182,16 @@ export const createProductReview = (productId, review) => {
         type: actionTypes.PRODUCT_CREATE_REVIEW_SUCCESS,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: actionTypes.PRODUCT_CREATE_REVIEW_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
