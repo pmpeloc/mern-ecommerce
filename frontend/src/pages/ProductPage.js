@@ -19,6 +19,7 @@ import {
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import actionTypes from '../redux/actions/action-types';
+import Meta from '../components/Meta';
 
 const ProductPage = () => {
   const params = useParams();
@@ -71,6 +72,7 @@ const ProductPage = () => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />

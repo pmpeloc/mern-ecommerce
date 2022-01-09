@@ -9,6 +9,7 @@
 - `yarn add axios`
 - `yarn add redux react-redux redux-thunk redux-devtools-extension`
 - `yarn add react-paypal-button-v2`
+- `yarn add react-helmet`
 
 ## Agregados para React Bootstrap:
 
