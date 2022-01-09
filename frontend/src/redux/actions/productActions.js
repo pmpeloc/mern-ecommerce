@@ -5,6 +5,7 @@ import {
   deleteAProduct,
   getProductById,
   getProducts,
+  getTopProducts,
   updateAProduct,
   upload,
 } from '../../services/productServices';
@@ -170,6 +171,27 @@ export const createProductReview = (productId, review) => {
     } catch (error) {
       dispatch({
         type: actionTypes.PRODUCT_CREATE_REVIEW_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+export const listTopProducts = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionTypes.PRODUCT_TOP_REQUEST });
+      const data = await getTopProducts();
+      dispatch({
+        type: actionTypes.PRODUCT_TOP_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PRODUCT_TOP_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

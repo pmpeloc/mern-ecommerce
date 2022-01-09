@@ -108,3 +108,12 @@ export const createAProductReview = async (productId, review, userInfo) => {
     throw error;
   }
 };
+
+export const getTopProducts = async () => {
+  try {
+    const { data } = await axios.get(`${BASE_URL_BACK}/products/top`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
