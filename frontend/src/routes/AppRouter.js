@@ -28,6 +28,11 @@ const AppRouter = () => {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/search/:keyword' element={<HomePage />} />
+            <Route path='/page/:pageNumber' element={<HomePage />} />
+            <Route
+              path='/search/:keyword/page/:pageNumber'
+              element={<HomePage />}
+            />
             <Route path='/product/:id' element={<ProductPage />} />
             <Route path='/cart'>
               <Route path=':id' element={<CartPage />} />
@@ -42,6 +47,10 @@ const AppRouter = () => {
             <Route path='/admin/userlist' element={<UserListPage />} />
             <Route path='/admin/user/:id/edit' element={<UserEditPage />} />
             <Route path='/admin/productlist' element={<ProductListPage />} />
+            <Route
+              path='/admin/productlist/:pageNumber'
+              element={<ProductListPage />}
+            />
             <Route path='/admin/orderlist' element={<OrderListPage />} />
             <Route
               path='/admin/product/:id/edit'
