@@ -44,3 +44,5 @@
 - `heroku --version`
 - `heroku login`
 - `heroku create tiendavirtualmern`
+- `heroku git:remote -a tiendavirtualmern`
+- `git push heroku master`
